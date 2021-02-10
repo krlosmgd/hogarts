@@ -1,0 +1,64 @@
+<h2>Students</h2>
+<button mat-raised-button (click)="showAddStudent = !showAddStudent" color="primary">Add student</button>
+<div *ngIf="showAddStudent">
+    <div class="form" [formGroup]="registerForm">
+        <h1>Register new students</h1>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="file">Choose a picture: </label>
+                <input style="display: none;" #fileInput formControlName="photo" type="file" (change)="uploadImage($event.target.files)" id="file"accept="image/png, image/jpeg">
+                <button (click)="fileInput.click()" color="primary" mat-mini-fab aria-label="Choose a photo">
+                    <mat-icon>upload</mat-icon>
+                  </button>
+            </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label>Name: </mat-label>
+                    <input formControlName="name" matInput type="text" placeholder="Jhon Smith" autocomplete="off">
+                    <mat-hint *ngIf="getFormControl('name').touched && getFormControl('name').errors" align="start"><strong>required field</strong> </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of birth: </mat-label>
+                    <input formControlName="dateOfbirth" matInput type="date"  placeholder="12/25/2000" autocomplete="off">
+                    <mat-hint *ngIf="getFormControl('dateOfbirth').touched && getFormControl('dateOfbirth').errors" align="start"><strong>required field</strong> </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label>Patronus: </mat-label>
+                    <input formControlName="patronus" matInput type="text" placeholder="stag" autocomplete="off">
+                    <mat-hint *ngIf="getFormControl('patronus').touched && getFormControl('patronus').errors" align="start"><strong>required field</strong> </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="form-group form-group--btn">
+                <button mat-raised-button [disabled]="registerForm.invalid" color="primary" (click)="saveRegisterForm()">Send request</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="content">
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Students">
+          <ng-template matTabContent>
+            <ng-container *ngIf="dataSource?.data.length > 0;">
+                <app-table [dataSource]="dataSource"></app-table>
+            </ng-container>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="User registered">
+          <ng-template matTabContent>
+            <ng-container *ngIf="dataSourceNewRegister?.data.length > 0; else notHasElement">
+                <app-table [dataSource]="dataSourceNewRegister"></app-table>
+            </ng-container>
+            <ng-template #notHasElement>
+                <span>There aren´t new requests.</span>
+            </ng-template>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+</div>
+
+

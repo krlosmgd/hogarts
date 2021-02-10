@@ -1,0 +1,25 @@
+<ng-container>
+    <h2>Houses</h2>
+    <div *ngIf="housesList$">
+        <mat-form-field [formGroup]="houseForm" appearance="fill">
+            <mat-label>Houses</mat-label>
+            <mat-select (selectionChange)="getStudentsByHouse(getFormControl('house').value)" formControlName="house">
+                <ng-container *ngFor="let item of housesList$ | async">
+                    <mat-option [value]="item">
+                        {{item}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="characters$ | async">
+        <h3>Students</h3>
+        <ng-container *ngIf="dataSource.data.length > 0; else notFound">
+            <app-table [dataSource]="dataSource"></app-table>
+        </ng-container>
+        <ng-template #notFound>
+            <span>select a house</span>
+        </ng-template>
+    </div>
+</ng-container>

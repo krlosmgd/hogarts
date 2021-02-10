@@ -1,0 +1,21 @@
+.form {
+    box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 25%);
+    padding: 16px 48px;
+    margin: 22px 1px;
+    border-radius: 4px;
+    background: #ffd740;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.form-group {
+    flex: 1 1 auto;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    margin-top: 0;
+}
