@@ -19,6 +19,10 @@ const routes: Routes = [
     component: TeachersComponent
   },
   {
+    path: '*',
+    redirectTo: '',
+  },
+  {
     path: '**',
     redirectTo: '',
   }

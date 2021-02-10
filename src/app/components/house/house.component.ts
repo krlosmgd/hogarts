@@ -68,7 +68,7 @@ export class HouseComponent implements OnInit, OnDestroy {
    * @summary get form control from from group
    * @param  {string} key
    */
-  protected getFormControl(key: string): AbstractControl{
+  public getFormControl(key: string): AbstractControl{
     return this.houseForm.get(key);
   }
 
@@ -76,7 +76,7 @@ export class HouseComponent implements OnInit, OnDestroy {
    * @summary get students by house name
    * @param  {string} key
    */
-  protected getStudentsByHouse(house: string): void{
+  public getStudentsByHouse(house: string): void{
     this.characters$ = this.houseService.getStudentsByHouse(house);
     this.initTable();
   }
