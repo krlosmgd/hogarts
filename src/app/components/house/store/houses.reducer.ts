@@ -6,6 +6,12 @@ export const initialStudentsList: Character[] = [];
 
 const _studentsListReducer = createReducer(initialStudentsList, on(action.houseCharacters, (state, { studentsList }) => studentsList));
 
+/*
+ * @summary Update student list reducer
+ * @param  {} state
+ * @param  {} action
+ * @return create reducer
+ */
 export function studentsListReducer(state, action){
     return _studentsListReducer(state, action);
 }

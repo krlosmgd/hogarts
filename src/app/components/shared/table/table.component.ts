@@ -23,6 +23,11 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  /*
+   * @summary Calculate age with birthdate
+   * @param  {Date} birthdate
+   * @returns age
+   */
   public calculateAge(birthdate: Date) {
     return moment().diff(birthdate, 'years') ? moment().diff(birthdate, 'years') : 'N/A';
   }

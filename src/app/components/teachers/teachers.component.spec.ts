@@ -1,3 +1,5 @@
+import { HttpClientModule } from '@angular/common/http';
+import { HttpService } from './../../services/http.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TeachersComponent } from './teachers.component';
@@ -8,7 +10,9 @@ describe('TeachersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeachersComponent ]
+      imports: [ HttpClientModule ],
+      declarations: [ TeachersComponent ],
+      providers: [ HttpService ]
     })
     .compileComponents();
   }));

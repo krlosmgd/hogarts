@@ -8,8 +8,14 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class TeachersService {
 
+  /*
+   * @param  {HttpService} httpService: Used to make API request
+   */
   constructor(private httpService: HttpService) { }
 
+  /*
+   * @summary get staff list
+   */
   getStaff():Observable<Character[]>{
     return this.httpService.get('/staff');
   }

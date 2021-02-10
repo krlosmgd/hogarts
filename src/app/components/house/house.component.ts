@@ -37,29 +37,26 @@ export class HouseComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  /*
+   * @summary dispath students list action
+   * @param  {Character[]} characters
+   */
   private dispachStudentsList(characters: Character[]): void{
     this.store.dispatch(action.houseCharacters({studentsList: characters}));
   }
 
-  public getFormControl(key: string): AbstractControl{
-    return this.houseForm.get(key);
-  }
-
-  public getStudentsByHouse(house: string): void{
-    this.characters$ = this.houseService.getStudentsByHouse(house);
-    this.initTable();
-  }
-
-  public calculateAge(birthdate: Date){
-    return moment().diff(birthdate, 'years') ? moment().diff(birthdate, 'years') : 'N/A';
-  }
-
+  /*
+   * @summary initialize selector by houses.
+   */
   private initHouseForm(): void{
     this.houseForm = new FormGroup({
       house: new FormControl('', Validators.required)
     });
   }
 
+  /*
+   * @summary initialize table
+   */
   private initTable(): void{
     this.characters$.pipe(takeUntil(this.unsubscribe$)).subscribe((characters: Character[]) => {
         this.dispachStudentsList(characters);
@@ -67,6 +64,21 @@ export class HouseComponent implements OnInit, OnDestroy {
     });
   }
 
+  /*
+   * @summary get form control from from group
+   * @param  {string} key
+   */
+  protected getFormControl(key: string): AbstractControl{
+    return this.houseForm.get(key);
+  }
 
+  /*
+   * @summary get students by house name
+   * @param  {string} key
+   */
+  protected getStudentsByHouse(house: string): void{
+    this.characters$ = this.houseService.getStudentsByHouse(house);
+    this.initTable();
+  }
 
 }

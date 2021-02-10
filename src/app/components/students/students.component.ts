@@ -41,15 +41,21 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     this.unsubscribe$.complete();
   }
 
+  /*
+   * @summary init user registered and table
+   */
   private getUserRegistered(): void{
     this.userRegister = this.studentsService.getUserRegister();
     this.userRegisterLength = this.userRegister?.length;
-    if(this.userRegister){
+    if(this.userRegister) {
       this.dispachUserRegister(this.userRegister);
-      this.dataSourceNewRegister = new MatTableDataSource(this.userRegister);
+      this.initTableDataSourceNewRegister(this.userRegister);
     }
   }
 
+  /*
+   * @summary initialize register form
+   */
   private InitializeRegisterForm(): void{
     this.registerForm = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -59,23 +65,44 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     })
   }
 
+  /*
+   * @summary Dispatch user register action
+   * @param  {Character[]} userRegister
+   */
   private dispachUserRegister(userRegister: Character[]): void{
     this.store.dispatch(studentsAction.userRegister({userRegister: userRegister}));
   }
 
+  /*
+   * @summary get student list and initialize table
+   */
   private getStudentsList(): void{
     this.studentsService.getStudents().pipe(takeUntil(this.unsubscribe$)).subscribe(res=> {
       this.dataSource = new MatTableDataSource(res);
     });
   }
 
+  /*
+   * @summary Subscribe to a new register action
+   */
   private getNewRegister(): void{
     this.store.select('userRegister').pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
-        this.dataSourceNewRegister = new MatTableDataSource(res);
+      this.initTableDataSourceNewRegister(res);
     });
   }
 
-  public saveRegisterForm(): void{
+  /*
+   * @summary Initialize data source new register
+   * @param  {Character[]} userRegister
+   */
+  private initTableDataSourceNewRegister(userRegister: Character[]): void{
+    this.dataSourceNewRegister = new MatTableDataSource(userRegister);
+  }
+
+  /*
+   * @summary save a new register in the localStorage
+   */
+  public saveRegisterForm(): void {
     if(this.registerForm.valid) {
 
       const data: Character[] = [{
@@ -98,11 +125,14 @@ export class StudentsComponent implements OnInit, AfterViewInit {
       this.registerForm.reset();
       setTimeout(()=>{
         this.matTabGroup.selectedIndex = 1;
-      },250)
-
+      },250);
     }
   }
 
+  /*
+   * @summary Upload photo
+   * @param  {} $event
+   */
   public uploadImage($event): void{
     let reader = new FileReader();
     reader.readAsDataURL($event[0]);
@@ -111,9 +141,12 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+   * @summary get form control from from group
+   * @param  {string} key
+   */
   public getFormControl(key: string): AbstractControl{
     return this.registerForm.get(key);
   }
-
 
 }
